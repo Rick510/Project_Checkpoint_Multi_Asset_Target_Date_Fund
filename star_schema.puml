@@ -1,0 +1,71 @@
+'This Star Schema is not the final version yet, We plan to add data type for each column and add some more tables we might use
+
+
+@startuml
+
+!define table(x) entity x << (T,#FF7700) >>
+' setting up to orthogonal
+skinparam linetype ortho
+
+
+' ProductMaster table
+table(PRODUCTMASTER) {
+  * PRODUCTCODE
+  --
+    PRODUCTNAME
+    STRATEGY
+    VEHICLECATEGORY
+    VEHICLETYPE
+    ISMARKETED
+}
+
+' PortfolioGeneralInformation table
+table(PORTFOLIO_GENERAL_INFO) {
+  * PORTFOLIOCODE
+  * PRODUCTCODE
+  --
+    NAME
+    INVESTMENTSTYLE
+    PORTFOLIOCATEGORY
+    OPENDATE
+    TERMINATIONDATE
+}
+
+' HoldingDetails table
+table(HOLDINGDETAILS) {
+  * PORTFOLIOCODE 
+  * ISINCODE
+  * CUSIP
+  --
+    ISSUEDISPLAYNAME     as HoldingName
+    CUSTOMCLASS1NAME     as AssetClass
+    CUSTOMCLASS2NAME     as SubAssetClass
+    CUSTOMCLASS3NAME     as Sector
+    CUSTOMCLASS4NAME     as Region
+    MARKETVALUE
+    HISTORYDATE
+    PORTFOLIOWEIGHT      as Percentage
+    CURRENCYCODE         as Currency
+}
+
+' PortfolioPerformance table
+table(PORTFOLIO_PERFORMANCE) {
+  * PORTFOLIOCODE
+    PERFORMANCEFREQUENCY
+    PERFORMANCEFACTOR
+}
+
+' PortfolioAttributes table
+table(PORTFOLIO_ATTRIBUTES) {
+  * PORTFOLIOCODE
+    ATTRIBUTETYPE
+}
+
+' Setting up foreign key 
+PRODUCTS     ||..||  PORTFOLIO_GENERAL_INFO : PRODUCTCODE
+PORTFOLIO_GENERAL_INFO   ||..||  HOLDINGDETAILS : PORTFOLIOCODE
+PORTFOLIO_GENERAL_INFO   ||..||  PORTFOLIO_PERFORMANCE : PORTFOLIOCODE
+PORTFOLIO_GENERAL_INFO   ||..||  PORTFOLIO_ATTRIBUTES  : PORTFOLIOCODE
+
+
+@enduml
