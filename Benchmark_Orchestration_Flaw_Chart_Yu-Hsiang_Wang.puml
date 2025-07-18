@@ -1,0 +1,16 @@
+@startuml
+skinparam linetype ortho
+
+start
+
+:From Yahoo Finance API\npull data to dataframe;
+:Reshape dataframe to match\nstructure & data type in Snowflake;
+
+if (Benchmark ticker exists\nin Snowflake table?) then (Already exist)
+  :Insert missing data up to today\ninto database;
+else (Not exist)
+  :Insert data from end date\n(20 years ago) to today;
+endif
+
+stop
+@enduml
