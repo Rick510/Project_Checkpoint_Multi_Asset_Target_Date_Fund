@@ -1,2 +1,2 @@
-# Project_Checkpoint_Yu-Hsiang_Wang-Rick-
+# Project_Checkpoint_Multi-Asset
 MSBA_Multi-Asset_Project_Checkpoint_Yu-Hsiang_Wang(Rick)
